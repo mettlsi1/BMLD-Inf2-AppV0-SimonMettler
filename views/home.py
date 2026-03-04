@@ -16,11 +16,14 @@ if submit:
     if hvz <= 0:
         st.error("Bitte eine Halbwertszeit größer als 0 eingeben.")
     else:
+        # Anfangsmasse immer in Gramm berechnen
         masse_g = masse * (1000.0 if masse_einheit == "kg" else 1.0)
 
-        t_end = hvz * 10
-        t = np.linspace(0, t_end, 500)
+        # Zeitachse (0 … 5×T½) und Zerfall
+        t_end = hvz * 5
+        t = np.linspace(0, t_end, 20)           
         mass_t = masse_g * 0.5 ** (t / hvz)
+        pct = mass_t / masse_g * 100                    
 
         # Plot
         fig, ax = plt.subplots()
@@ -32,10 +35,19 @@ if submit:
         ax.legend()
         st.pyplot(fig)
 
-        # Tabelle erzeugen
+        # Tabelle mit Prozent und beiden Masseeinheiten
         df = pd.DataFrame({
             f"Zeit ({hvz_einheit})": t,
-            "Masse (g)": mass_t
+            "Masse (g)": mass_t,
+            "Masse (kg)": mass_t / 1000,
+            "Verbleib (%)": pct
         })
 
-        st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
+        st.markdown("### Verbleibende Masse nach bestimmten Zeitabständen")
+        st.dataframe(df.style.format({
+            "Masse (g)": "{:.3f}",
+            "Masse (kg)": "{:.6f}",
+            "Verbleib (%)": "{:.2f}"
+        }))
+
+        st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
