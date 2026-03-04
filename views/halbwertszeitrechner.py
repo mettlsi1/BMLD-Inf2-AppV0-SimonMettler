@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 
@@ -35,5 +36,11 @@ if submit:
         ax.legend()
 
         st.pyplot(fig)
+
+        # Tabelle erzeugen
+        df = pd.DataFrame({
+            f"Zeit ({hvz_einheit})": t,
+            "Masse (g)": mass_t
+        })
 
         st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
