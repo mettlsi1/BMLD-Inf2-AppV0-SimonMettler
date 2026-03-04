@@ -1,6 +1,7 @@
 import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
 
-st.title("Halbwertszeit-Rechner")
 
     # Eingabeformular für Halbwertszeit und Masse
 with st.form("halbwertszeit_form"):
@@ -11,7 +12,29 @@ with st.form("halbwertszeit_form"):
     submit = st.form_submit_button("Absenden")
 
 if submit:
-    # Masse in Gramm umrechnen
-    masse_g = masse * (1000.0 if masse_einheit == "kg" else 1.0)
-    st.write(f"Eingegebene Halbwertszeit: {hvz} {hvz_einheit}")
-    st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
+    if hvz <= 0:
+        st.error("Bitte eine Halbwertszeit größer als 0 eingeben.")
+    else:
+        # Masse in Gramm umrechnen
+        masse_g = masse * (1000.0 if masse_einheit == "kg" else 1.0)
+
+        # Zeitachse in derselben Einheit wie die Halbwertszeit (0 bis 10 Halbwertszeiten)
+        t_end = hvz * 10
+        t = np.linspace(0, t_end, 500)
+
+        # Zerfall: M(t) = M0 * (1/2)^(t / T_half)
+        mass_t = masse_g * 0.5 ** (t / hvz)
+
+        # Plot erstellen
+        fig, ax = plt.subplots()
+        ax.plot(t, mass_t, label="Masse")
+        ax.set_xlabel(f"Zeit ({hvz_einheit})")
+        ax.set_ylabel("Masse (g)")
+        ax.set_title("Zerfall der Masse über die Zeit")
+        ax.grid(True)
+        ax.legend()
+
+        st.pyplot(fig)
+
+        st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
+```
