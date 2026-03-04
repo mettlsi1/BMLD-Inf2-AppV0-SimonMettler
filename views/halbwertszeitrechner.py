@@ -37,4 +37,3 @@ if submit:
         st.pyplot(fig)
 
         st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
-```
