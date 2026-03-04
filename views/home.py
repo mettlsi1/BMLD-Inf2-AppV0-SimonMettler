@@ -6,7 +6,4 @@ st.markdown("Die Anwendung ermöglicht es ihnen die Halbwertszeit eines Elements
 # Disclaimer mit gelbem Hintergrund
 st.warning("⚠️ Hinweis: Dies ist eine Beispielanwendung. Bitte überprüfen Sie die Ergebnisse mit offiziellen Quellen.")
 
-
-"""
-Diese App wurde von Simon Mettler (mettlsi1@students.zhaw.ch) im Rahmen des Moduls 'BMLD Informatik 2' an der ZHAW entwickelt.
-"""
+st.text("Diese App wurde von Simon Mettler (mettlsi1@students.zhaw.ch) im Rahmen des Moduls 'BMLD Informatik 2' an der ZHAW entwickelt.")
