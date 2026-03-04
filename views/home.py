@@ -8,5 +8,5 @@ st.warning("⚠️ Hinweis: Dies ist eine Beispielanwendung. Bitte überprüfen 
 
 
 """
-Diese App wurde von Simon Mettler (mettlsi1@students.zhaw.ch) im Rahmen des Moduls 'BMLD Informatik 2' an der ZHAWentwickelt.
+Diese App wurde von Simon Mettler (mettlsi1@students.zhaw.ch) im Rahmen des Moduls 'BMLD Informatik 2' an der ZHAW entwickelt.
 """
