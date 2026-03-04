@@ -44,3 +44,5 @@ if submit:
         })
 
         st.write(f"Anfangsmasse: {masse} {masse_einheit} ({masse_g:.6g} g)")
+        st.write("Tabelle der Masse über die Zeit:")
+        st.dataframe(df)
