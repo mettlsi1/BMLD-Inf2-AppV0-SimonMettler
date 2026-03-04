@@ -35,6 +35,7 @@ if submit:
 
         # Tabelle mit 20 Einträgen in 5%-Abständen (100%, 95%, 90%, ..., 5%)
         table_data = []
+        zeit_col = f"Zeit ({hvz_einheit})"
         for percentage in range(100, -5, -5):
             # M(t) = M0 * 0.5^(t/T) => 0.5^(t/T) = percentage/100 => t = T * log(percentage/100) / log(0.5)
             if percentage > 0:
