@@ -40,26 +40,19 @@ if submit:
             # M(t) = M0 * 0.5^(t/T) => 0.5^(t/T) = percentage/100 => t = T * log(percentage/100) / log(0.5)
             if percentage > 0:
                 t_val = hvz * np.log(percentage / 100.0) / np.log(0.5)
+                t_display = f"{t_val:.6g}"
             else:
-                t_val = float('inf')
+                t_display = "∞"
 
             remaining_mass_g = masse_g * (percentage / 100.0)
             remaining_mass_original = remaining_mass_g / (1000.0 if masse_einheit == "kg" else 1.0)
 
-            if t_val != float('inf'):
-                table_data.append({
-                    "Zeit": f"{t_val:.6g}",
-                    f"Masse ({masse_einheit})": f"{remaining_mass_original:.6g}",
-                    "Masse (g)": f"{remaining_mass_g:.6g}",
-                    "% der Anfangsmasse": f"{percentage}%"
-                })
-            else:
-                table_data.append({
-                    "Zeit": "∞",
-                    f"Masse ({masse_einheit})": "0",
-                    "Masse (g)": "0",
-                    "% der Anfangsmasse": "0%"
-                })
+            table_data.append({
+                zeit_col: t_display,
+                f"Masse ({masse_einheit})": f"{remaining_mass_original:.6g}",
+                "Masse (g)": f"{remaining_mass_g:.6g}",
+                "% der Anfangsmasse": f"{percentage}%"
+            })
 
         df = pd.DataFrame(table_data)
 
