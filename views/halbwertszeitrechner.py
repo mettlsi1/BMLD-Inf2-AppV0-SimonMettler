@@ -33,36 +33,32 @@ if submit:
         ax.legend()
         st.pyplot(fig)
 
-        # Intelligente Zeitabstände bestimmen basierend auf Halbwertszeit
-        time_intervals = []
-        labels = []
-
-        if hvz_einheit == "Sekunden":
-            time_intervals = [0, 1, 5, 10, 30, 60, 300, 600, 3600]
-            labels = ["0s", "1s", "5s", "10s", "30s", "1min", "5min", "10min", "1h"]
-        elif hvz_einheit == "Stunden":
-            time_intervals = [0, 0.5, 1, 2, 6, 12, 24, 48, 96]
-            labels = ["0h", "30min", "1h", "2h", "6h", "12h", "1d", "2d", "4d"]
-        elif hvz_einheit == "Tage":
-            time_intervals = [0, 1, 7, 14, 30, 60, 90, 180, 365]
-            labels = ["0d", "1d", "1w", "2w", "1mo", "2mo", "3mo", "6mo", "1y"]
-        elif hvz_einheit == "Jahre":
-            time_intervals = [0, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000]
-            labels = ["0y", "1y", "10y", "100y", "1ky", "10ky", "100ky", "1My", "10My"]
-
-        # Tabelle erstellen
+        # Tabelle mit 20 Einträgen in 5%-Abständen (100%, 95%, 90%, ..., 5%)
         table_data = []
-        for t_val, label in zip(time_intervals, labels):
-            remaining_mass_g = masse_g * 0.5 ** (t_val / hvz)
-            remaining_mass_original = remaining_mass_g / (1000.0 if masse_einheit == "kg" else 1.0)
-            percentage = (remaining_mass_g / masse_g) * 100
+        for percentage in range(100, -5, -5):
+            # M(t) = M0 * 0.5^(t/T) => 0.5^(t/T) = percentage/100 => t = T * log(percentage/100) / log(0.5)
+            if percentage > 0:
+                t_val = hvz * np.log(percentage / 100.0) / np.log(0.5)
+            else:
+                t_val = float('inf')
 
-            table_data.append({
-                "Zeit": label,
-                f"Masse ({masse_einheit})": f"{remaining_mass_original:.6g}",
-                "Masse (g)": f"{remaining_mass_g:.6g}",
-                "% der Anfangsmasse": f"{percentage:.2f}%"
-            })
+            remaining_mass_g = masse_g * (percentage / 100.0)
+            remaining_mass_original = remaining_mass_g / (1000.0 if masse_einheit == "kg" else 1.0)
+
+            if t_val != float('inf'):
+                table_data.append({
+                    "Zeit": f"{t_val:.6g}",
+                    f"Masse ({masse_einheit})": f"{remaining_mass_original:.6g}",
+                    "Masse (g)": f"{remaining_mass_g:.6g}",
+                    "% der Anfangsmasse": f"{percentage}%"
+                })
+            else:
+                table_data.append({
+                    "Zeit": "∞",
+                    f"Masse ({masse_einheit})": "0",
+                    "Masse (g)": "0",
+                    "% der Anfangsmasse": "0%"
+                })
 
         df = pd.DataFrame(table_data)
 
