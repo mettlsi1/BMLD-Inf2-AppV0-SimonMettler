@@ -1,8 +1,11 @@
 import streamlit as st
 
 st.title("Halbwertszeit-Rechner")
-st.markdown("Die Anwendung ermöglicht es ihnen die Halbwertszeit eines Elements zu berechnen")
-# !! WICHTIG: Eure Emails müssen in der App erscheinen!!
+st.subheader("Die Anwendung ermöglicht es ihnen die Halbwertszeit eines Elements zu berechnen")
+
+# Disclaimer mit gelbem Hintergrund
+st.warning("⚠️ Hinweis: Dies ist eine Beispielanwendung. Bitte überprüfen Sie die Ergebnisse mit offiziellen Quellen.")
+
 
 """
 Diese App wurde von der folgenden Person entwickelt:
