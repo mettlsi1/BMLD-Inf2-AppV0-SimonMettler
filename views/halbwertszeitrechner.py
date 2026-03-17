@@ -60,3 +60,10 @@ if submit:
         st.dataframe(df, use_container_width=True)
 
         st.write(f"**Anfangsmasse:** {masse} {masse_einheit} ({masse_g:.6g} g)")
+
+
+        # --- history update session state ---
+    st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([result])])
+
+    # --- session state anzeigen lassen ---
+st.dataframe(st.session_state['data_df'])
