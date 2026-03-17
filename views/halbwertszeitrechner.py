@@ -63,7 +63,15 @@ if submit:
 
 
         # --- history update session state ---
-        st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([result])])
-
-    # --- session state anzeigen lassen ---
-    st.dataframe(st.session_state['data_df'])
+        result = {
+            "Halbwertszeit": hvz,
+            "Einheit HWZ": hvz_einheit,
+            "Anfangsmasse": masse,
+            "Einheit Masse": masse_einheit,
+            "Anfangsmasse (g)": masse_g,
+            "Berechnungszeit": str(pd.Timestamp.now()),  # optional: Datum/Uhrzeit
+        }
+        st.session_state['data_df'] = pd.concat(
+            [st.session_state['data_df'], pd.DataFrame([result])],
+            ignore_index=True
+        )
