@@ -63,7 +63,7 @@ if submit:
 
 
         # --- history update session state ---
-    st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([result])])
+        st.session_state['data_df'] = pd.concat([st.session_state['data_df'], pd.DataFrame([result])])
 
     # --- session state anzeigen lassen ---
-st.dataframe(st.session_state['data_df'])
+    st.dataframe(st.session_state['data_df'])
