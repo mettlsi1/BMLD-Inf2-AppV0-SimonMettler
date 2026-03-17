@@ -1,5 +1,8 @@
 import pandas as pd
 import streamlit as st
+from utils.data_manager import DataManager
+
+data_manager = DataManager(fs_protocol='webdav', fs_root_folder="BMLD_App_HWZR")
 
 # --- initialize empty data frame if not already present ---
 if 'data_df' not in st.session_state:
