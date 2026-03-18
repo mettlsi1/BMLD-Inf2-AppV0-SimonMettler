@@ -75,5 +75,11 @@ if submit:
             [st.session_state['data_df'], pd.DataFrame([result])],
             ignore_index=True
         )
+        
+ # --- CODE UPDATE: save data to data manager ---
+    data_manager = DataManager()
+    data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
+    # --- END OF CODE UPDATE ---
+       
 st.markdown("### Verlauf / Session-Historie")
 st.dataframe(st.session_state['data_df'], use_container_width=True)
