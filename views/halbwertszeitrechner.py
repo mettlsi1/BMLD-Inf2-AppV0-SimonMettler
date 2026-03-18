@@ -88,4 +88,4 @@ if submit:
         )
        
 st.markdown("### Verlauf / Session-Historie")
-st.dataframe(st.session_state['data_df'])
+st.dataframe(st.session_state['data_df'], width='stretch')
