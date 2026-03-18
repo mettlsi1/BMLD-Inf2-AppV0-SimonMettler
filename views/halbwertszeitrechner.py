@@ -89,3 +89,38 @@ if submit:
        
 st.markdown("### Verlauf / Session-Historie")
 st.dataframe(st.session_state['data_df'], width='stretch')
+
+# --- Grafik der gespeicherten Daten ---
+if not st.session_state['data_df'].empty:
+    st.markdown("### Grafik der Halbwertszeit-Berechnungen")
+    
+    # Daten vorbereiten (Einheiten berücksichtigen – Annahme: alles in g und Jahren für Einfachheit)
+    plot_df = st.session_state['data_df'].copy()
+    # Einheiten normalisieren (z. B. Tage zu Jahren umrechnen, kg zu g)
+    plot_df['Halbwertszeit_norm'] = plot_df.apply(
+        lambda row: row['Halbwertszeit'] if row['Einheit HWZ'] == 'Jahre' 
+        else row['Halbwertszeit'] / 365 if row['Einheit HWZ'] == 'Tage' 
+        else row['Halbwertszeit'] / (365 * 24) if row['Einheit HWZ'] == 'Stunden' 
+        else row['Halbwertszeit'] / (365 * 24 * 3600), axis=1
+    )
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
+    scatter = ax.scatter(
+        plot_df['Halbwertszeit_norm'], 
+        plot_df['Anfangsmasse (g)'], 
+        c=plot_df['Einheit HWZ'].astype('category').cat.codes,  # Farbkodierung nach Einheit
+        cmap='viridis', 
+        alpha=0.7
+    )
+    ax.set_xlabel("Halbwertszeit (Jahre)")
+    ax.set_ylabel("Anfangsmasse (g)")
+    ax.set_title("Scatterplot: Halbwertszeit vs. Anfangsmasse")
+    ax.grid(True)
+    
+    # Legende für Farben
+    handles, labels = scatter.legend_elements(prop="colors", alpha=0.7)
+    ax.legend(handles, plot_df['Einheit HWZ'].unique(), title="Einheit HWZ")
+    
+    st.pyplot(fig)
+else:
+    st.info("Noch keine Daten vorhanden – führe eine Berechnung durch, um die Grafik zu sehen.")
