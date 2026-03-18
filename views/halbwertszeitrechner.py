@@ -85,7 +85,7 @@ if submit:
         st.session_state['data_df'] = pd.concat(
         [st.session_state['data_df'], pd.DataFrame([result])],
         ignore_index=True
-)
+        )
        
 st.markdown("### Verlauf / Session-Historie")
 st.dataframe(st.session_state['data_df'])
