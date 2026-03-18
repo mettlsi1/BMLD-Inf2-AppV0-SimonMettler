@@ -81,7 +81,11 @@ if submit:
  # --- Daten auf DataManager speichern ---
         data_manager = DataManager()
         data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
-
+        
+st.session_state['data_df'] = pd.concat(
+    [st.session_state['data_df'], pd.DataFrame([result])],
+    ignore_index=True
+)
        
 st.markdown("### Verlauf / Session-Historie")
 st.dataframe(st.session_state['data_df'])
