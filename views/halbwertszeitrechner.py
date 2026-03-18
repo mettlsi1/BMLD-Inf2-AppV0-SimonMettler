@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from utils.data_manager import DataManager
+
+data_manager = DataManager(fs_protocol='webdav', fs_root_folder="BMLD_App_HWZR")
 
 st.title("Halbwertszeit-Rechner")
 
@@ -75,7 +78,7 @@ if submit:
             [st.session_state['data_df'], pd.DataFrame([result])],
             ignore_index=True
         )
-        
+
  # --- CODE UPDATE: save data to data manager ---
     data_manager = DataManager()
     data_manager.save_user_data(st.session_state['data_df'], 'data.csv')
