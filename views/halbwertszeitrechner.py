@@ -108,9 +108,15 @@ if not st.session_state['data_df'].empty:
         cmap='viridis', 
         alpha=0.7
     )
-    ax.set_xlabel("Halbwertszeit (Jahre)")
-    ax.set_ylabel("Anfangsmasse (g)")
-    ax.set_title("Scatterplot: Halbwertszeit vs. Anfangsmasse")
+
+    # --- Logarithmische Skalierung hinzufügen ---
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    
+    # Optional: Labels anpassen für Klarheit
+    ax.set_xlabel("Halbwertszeit (Jahre, log-Skala)")
+    ax.set_ylabel("Anfangsmasse (g, log-Skala)")
+    ax.set_title("Scatterplot: Halbwertszeit vs. Anfangsmasse (log-Skalen)")
     ax.grid(True)
     
     # Legende für Farben
