@@ -76,7 +76,6 @@ if submit:
         }
         st.session_state['data_df'] = pd.concat(
             [st.session_state['data_df'], pd.DataFrame([result])],
-            ignore_index=True
         )
 
  # --- CODE UPDATE: save data to data manager ---
@@ -85,4 +84,4 @@ if submit:
     # --- END OF CODE UPDATE ---
        
 st.markdown("### Verlauf / Session-Historie")
-st.dataframe(st.session_state['data_df'], use_container_width=True)
+st.dataframe(st.session_state['data_df'])
