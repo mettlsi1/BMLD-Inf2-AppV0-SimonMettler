@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from utils.data_manager import DataManager
 
-# --- NEW CODE: import and initialize data manager and login manager ---
+# --- importieren und initialisieren des DataManagers ---
 from utils.data_manager import DataManager
 from utils.login_manager import LoginManager
 
@@ -12,16 +12,15 @@ data_manager = DataManager(       # initialize data manager
     ) 
 login_manager = LoginManager(data_manager) # handles user login and registration
 login_manager.login_register()             # stops if not logged in
-# --- END OF NEW CODE ---
 
-# --- CODE UPDATE: load user data from data manager if not already present in session state --
+
+# --- user data laden, falls noch nicht vorhanden neue erstellen --
 if 'data_df' not in st.session_state:
     st.session_state['data_df'] = data_manager.load_user_data(
         'data.csv',                     # The file on switch drive where the data is stored
         initial_value=pd.DataFrame(),   # Initial value if the file does not exist
         parse_dates=['timestamp']       # Parse timestamp as datetime
     )
-# --- END OF CODE UPDATE ---
 
 st.set_page_config(page_title="Halbwertszeitrechner", page_icon=":material/home:")
 
